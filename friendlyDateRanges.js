@@ -3,6 +3,7 @@ function makeFriendlyDates(arr) {
  // var str = arr.split('');
   var nums = [arr[0].match(regex)];
   nums.push(arr[1].match(regex));
+  var returnString = []
 
   function getYear(nums) {
     var year = [];
@@ -10,6 +11,7 @@ function makeFriendlyDates(arr) {
     for(var i = 0; i < 4; i++) {
      year += nums[i];
     }
+    year = parseInt(year);
     return year;
   }
 
@@ -189,10 +191,33 @@ function makeFriendlyDates(arr) {
     this.ordinal = getOrdinal(this.day);
   };
 
-  var date1 = new Date(nums[0]);
+    var date1 = new Date(nums[0]);
   var date2 = new Date(nums[1]);
 
-  return date1.ordinal;
+  returnString =  [date1.monthName + " " + date1.ordinal];
+  returnString.push(date2.ordinal);
+
+  if((date1.year - date2.year) === 0 && (date1.month - date2.month) === 0 && (date1.day - date2.day) === 0) {
+      returnString = [date1.monthName + " " + date1.ordinal + "," + " " + date1.year];
+    } else if((date1.year - date2.year) === 0 && (date1.month - date2.month) === 0) {
+        returnString = [date1.monthName + " " + date1.ordinal];
+        returnString.push(date2.ordinal);
+    } else if((date1.year - date2.year) < 0 && (date1.day > date2.day)) {
+        returnString = [date1.monthName + " " + date1.ordinal + "," + " " + date1.year];
+        returnString.push(date2.monthName + " " + date2.ordinal);
+    } else if((date1.year - date2.year) === 0) {
+        returnString = [date1.monthName + " " + date1.ordinal + "," + " " + date1.year];
+        returnString.push(date2.monthName + " " + date2.ordinal);
+    } else if((date2.month - date1.month) < 1 && (Math.sqrt(Math.pow((date1.year - date2.year), 2))) <= 1 && (date1.day - date2.day) !== 0) {
+        returnString = [date1.monthName + " " + date1.ordinal];
+        returnString.push(date2.monthName + " " + date2.ordinal);
+    } else {
+        returnString = [date1.monthName + " " + date1.ordinal + "," + " " + date1.year];
+        returnString.push(date2.monthName + " " + date2.ordinal + "," + " " + date2.year);
+    }
+
+  return returnString;
 }
 
-makeFriendlyDates(['2016-07-01', '2016-07-04']);
+
+makeFriendlyDates(["2017-03-01", "2017-05-05"]);
