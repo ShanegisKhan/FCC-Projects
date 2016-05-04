@@ -3,7 +3,8 @@ function makeFriendlyDates(arr) {
  // var str = arr.split('');
   var nums = [arr[0].match(regex)];
   nums.push(arr[1].match(regex));
-  var returnString = []
+  var returnString = [];
+
 
   function getYear(nums) {
     var year = [];
@@ -191,7 +192,7 @@ function makeFriendlyDates(arr) {
     this.ordinal = getOrdinal(this.day);
   };
 
-    var date1 = new Date(nums[0]);
+  var date1 = new Date(nums[0]);
   var date2 = new Date(nums[1]);
 
   returnString =  [date1.monthName + " " + date1.ordinal];
